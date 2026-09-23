@@ -118,6 +118,8 @@ Entrega el código completo (sin explicaciones largas) para añadir un BUSCADOR 
 3. Muestra el estado EmptyState existente cuando no haya coincidencias
    ("No se encontraron médicos con ese nombre").
 4. Con icono de búsqueda (Icons.Filled.Search) a la izquierda y mantener el estilo Material3 actual.
+<img width="346" height="780" alt="image" src="https://github.com/user-attachments/assets/91920fe8-c295-4639-8a42-d4f39d8a1ede" />
+<img width="348" height="792" alt="image" src="https://github.com/user-attachments/assets/04180b0a-0928-4501-ba8b-2f5d2604e2f8" />
 
 Restricciones:
 - Solo Jetpack Compose + Material3, SIN ViewModel ni MVVM (se usa remember/mutableStateOf).
