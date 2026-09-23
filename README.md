@@ -107,3 +107,20 @@ ESPACIADO Y LAYOUT
 - Jerarquía visual clara: header/drawer → contenido con scroll → botón de acción fijo abajo (cuando aplica)
 
 Aplica estos estilos manteniendo la estructura y funcionalidad de mi código actual, solo actualizando colores, tipografía, espaciados, bordes y componentes visuales para que coincidan con este diseño.
+PROMPT4: Estás trabajando un proyecto Android con Jetpack Compose y Navigation Compose llamado "Clínica Salud+".
+Entrega el código completo (sin explicaciones largas) para añadir un BUSCADOR en la pantalla de Inicio
+(app/src/main/java/com/coronado/clinicasalud/ui/screens/HomeScreen.kt):
+
+1. Agrega un TextField de búsqueda (OutlinedTextField, placeholder "Buscar por nombre del médico")
+   entre el título "Elige una especialidad" y el LazyRow de especialidades.
+2. Filtra la lista de médicos por nombre ignorando mayúsculas/minúsculas (contains, ignoreCase), y aplica
+   el filtro DE MANERA COMBINADA con la especialidad seleccionada (ambos filtros a la vez).
+3. Muestra el estado EmptyState existente cuando no haya coincidencias
+   ("No se encontraron médicos con ese nombre").
+4. Con icono de búsqueda (Icons.Filled.Search) a la izquierda y mantener el estilo Material3 actual.
+
+Restricciones:
+- Solo Jetpack Compose + Material3, SIN ViewModel ni MVVM (se usa remember/mutableStateOf).
+- El estado del texto usa remember { mutableStateOf("") }; recuerda importar widget del field.
+- Mantén nombres y estructura existentes (HomeScreen, EmptyState, MedicoCard).
+- Antes de codificar, dime qué archivos modificarás y luego entrega el diff o archivos completos.
