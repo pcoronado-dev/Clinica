@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +26,8 @@ import com.coronado.clinica.data.Cita
 @Composable
 fun CitaCard(
     cita: Cita,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCancelarClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -83,6 +86,19 @@ fun CitaCard(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+            if (onCancelarClick != null) {
+                OutlinedButton(
+                    onClick = onCancelarClick,
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    ),
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(top = 4.dp)
+                ) {
+                    Text("Cancelar")
+                }
             }
         }
     }

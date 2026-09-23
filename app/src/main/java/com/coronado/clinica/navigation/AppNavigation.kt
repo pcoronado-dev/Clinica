@@ -175,7 +175,8 @@ fun AppNavigation(appState: AppState) {
             composable("mis_citas") {
                 MyAppointmentsScreen(
                     citas = appState.citasConfirmadas,
-                    onAbrirMenu = abrirMenu
+                    onAbrirMenu = abrirMenu,
+                    onCancelarCita = { cita -> appState.cancelarCita(cita) }
                 )
             }
 
