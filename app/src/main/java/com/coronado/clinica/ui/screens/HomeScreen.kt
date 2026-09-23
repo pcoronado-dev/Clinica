@@ -5,24 +5,32 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.MedicalServices
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +53,8 @@ fun HomeScreen(
     onAbrirMenu: () -> Unit,
     onMedicoClick: (Medico) -> Unit
 ) {
+    var textoBusqueda by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -93,8 +103,25 @@ fun HomeScreen(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)
             )
 
+            OutlinedTextField(
+                value = textoBusqueda,
+                onValueChange = { textoBusqueda = it },
+                placeholder = { Text("Buscar por nombre del médico") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Buscar"
+                    )
+                },
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 4.dp)
+            )
+
             LazyRow(
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 item {
@@ -113,15 +140,20 @@ fun HomeScreen(
                 }
             }
 
-            val medicos = if (appState.especialidadSeleccionada == null) {
-                appState.medicos
-            } else {
-                appState.medicos.filter { it.especialidad == appState.especialidadSeleccionada }
+            val medicosFiltrados = appState.medicos.filter { medico ->
+                val coincideEspecialidad = appState.especialidadSeleccionada == null || medico.especialidad == appState.especialidadSeleccionada
+                val coincideNombre = textoBusqueda.isBlank() || medico.nombre.contains(textoBusqueda, ignoreCase = true)
+                coincideEspecialidad && coincideNombre
             }
 
-            if (medicos.isEmpty()) {
+            if (medicosFiltrados.isEmpty()) {
+                val mensaje = if (textoBusqueda.isNotBlank()) {
+                    "No se encontraron médicos con ese nombre"
+                } else {
+                    "No hay médicos para la especialidad seleccionada."
+                }
                 EmptyState(
-                    mensaje = "No hay médicos para la especialidad seleccionada.",
+                    mensaje = mensaje,
                     modifier = Modifier.padding(16.dp)
                 )
             } else {
@@ -129,7 +161,7 @@ fun HomeScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(medicos, key = { it.id }) { medico ->
+                    items(medicosFiltrados, key = { it.id }) { medico ->
                         MedicoCard(
                             medico = medico,
                             onClick = { onMedicoClick(medico) }
