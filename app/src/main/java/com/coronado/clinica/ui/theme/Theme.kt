@@ -6,27 +6,33 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+val MoradoPrincipal = Color(0xFF6B2FA0)
+val MoradoClaro = Color(0xFFF0E5FA)
+val VerdeConfirmadaFondo = Color(0xFFE8F5F0)
+val VerdeConfirmadaTexto = Color(0xFF1B5E20)
+val GrisInactivo = Color(0xFFF2F2F2)
+val GrisTextoSecundario = Color(0xFF7A7A7A)
+val GrisTextoPrincipal = Color(0xFF1A1A1A)
+val BordeGris = Color(0xFFE0E0E0)
+val AmarilloEstrella = Color(0xFFFFC107)
+
 private val ClinicaLightColors = lightColorScheme(
-    primary = Color(0xFF00696D),
-    onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFF9CF0F4),
-    onPrimaryContainer = Color(0xFF002021),
-    secondary = Color(0xFF4A6365),
-    onSecondary = Color(0xFFFFFFFF),
-    secondaryContainer = Color(0xFFCCE8EA),
-    onSecondaryContainer = Color(0xFF051F21),
-    tertiary = Color(0xFF4C6E94),
-    onTertiary = Color(0xFFFFFFFF),
-    tertiaryContainer = Color(0xFFD1E4FF),
-    onTertiaryContainer = Color(0xFF001D3A),
-    background = Color(0xFFFAFDFC),
-    onBackground = Color(0xFF191C1C),
-    surface = Color(0xFFFAFDFC),
-    onSurface = Color(0xFF191C1C),
-    surfaceVariant = Color(0xFFDAE4E5),
-    onSurfaceVariant = Color(0xFF3F4849),
-    error = Color(0xFFBA1A1A),
-    outline = Color(0xFF6F7979)
+    primary = MoradoPrincipal,
+    onPrimary = Color.White,
+    primaryContainer = MoradoClaro,
+    onPrimaryContainer = MoradoPrincipal,
+    secondary = MoradoPrincipal,
+    onSecondary = Color.White,
+    secondaryContainer = MoradoClaro,
+    onSecondaryContainer = MoradoPrincipal,
+    background = Color.White,
+    onBackground = GrisTextoPrincipal,
+    surface = Color.White,
+    onSurface = GrisTextoPrincipal,
+    surfaceVariant = GrisInactivo,
+    onSurfaceVariant = GrisTextoSecundario,
+    outline = BordeGris,
+    error = Color(0xFFD32F2F)
 )
 
 @Composable

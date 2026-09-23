@@ -1,13 +1,18 @@
 package com.coronado.clinica.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.MedicalServices
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -20,8 +25,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.coronado.clinica.data.CitaEstado
 import com.coronado.clinica.data.Medico
+import com.coronado.clinica.ui.theme.AmarilloEstrella
+import com.coronado.clinica.ui.theme.BordeGris
+import com.coronado.clinica.ui.theme.GrisInactivo
+import com.coronado.clinica.ui.theme.GrisTextoPrincipal
+import com.coronado.clinica.ui.theme.GrisTextoSecundario
+import com.coronado.clinica.ui.theme.MoradoClaro
+import com.coronado.clinica.ui.theme.MoradoPrincipal
+import com.coronado.clinica.ui.theme.VerdeConfirmadaFondo
+import com.coronado.clinica.ui.theme.VerdeConfirmadaTexto
 
 @Composable
 fun RatingRow(
@@ -36,14 +51,15 @@ fun RatingRow(
         Icon(
             imageVector = Icons.Filled.Star,
             contentDescription = "Calificación",
-            tint = Color(0xFFFFB300),
+            tint = AmarilloEstrella,
             modifier = Modifier.size(18.dp)
         )
         Text(
             text = calificacion.toString(),
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onSurface
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+            color = GrisTextoPrincipal
         )
     }
 }
@@ -57,39 +73,54 @@ fun MedicoCard(
     Card(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
+            containerColor = Color.White,
+            contentColor = GrisTextoPrincipal
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        border = BorderStroke(1.dp, BordeGris),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = medico.nombre,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = medico.especialidad.etiqueta,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            Surface(
+                shape = CircleShape,
+                color = MoradoClaro,
+                modifier = Modifier.size(48.dp)
             ) {
-                RatingRow(calificacion = medico.calificacion)
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.Outlined.MedicalServices,
+                        contentDescription = null,
+                        tint = MoradoPrincipal,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
                 Text(
-                    text = "Ver perfil",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
+                    text = medico.nombre,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    color = GrisTextoPrincipal
+                )
+                Text(
+                    text = medico.especialidad.etiqueta,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 12.sp,
+                    color = GrisTextoSecundario
                 )
             }
+            RatingRow(calificacion = medico.calificacion)
         }
     }
 }
@@ -100,20 +131,21 @@ fun CitaEstadoBadge(
     modifier: Modifier = Modifier
 ) {
     val (container, content) = when (estado) {
-        CitaEstado.CONFIRMADA -> Color(0xFFA9E8C2) to Color(0xFF00391F)
-        CitaEstado.COMPLETADA -> Color(0xFFE4E4E4) to Color(0xFF414141)
+        CitaEstado.CONFIRMADA -> VerdeConfirmadaFondo to VerdeConfirmadaTexto
+        CitaEstado.COMPLETADA -> GrisInactivo to GrisTextoSecundario
     }
     Surface(
         color = container,
         contentColor = content,
-        shape = MaterialTheme.shapes.small,
+        shape = CircleShape,
         modifier = modifier
     ) {
         Text(
             text = estado.etiqueta,
             style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
         )
     }
 }
